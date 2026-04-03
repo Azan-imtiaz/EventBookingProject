@@ -7,6 +7,10 @@ app.use(cors());
 const connectDb=require("./conn/conn");
 const authRoute=require("./routes/auth");
 
+const eventRoute=require("./routes/event");
+
+const bookingRoute=require("./routes/booking");
+
 
 connectDb();
 app.use(express.json());
@@ -15,6 +19,9 @@ app.get("/",(req,res)=>{
     res.send("Server is running");
 })
 app.use("/api/auth",authRoute);
+
+app.use("/api/event",eventRoute);
+app.use("/api/booking",bookingRoute);
 
 console.log("Auth route loaded");
 app.listen(PORT,()=>{
