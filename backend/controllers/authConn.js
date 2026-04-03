@@ -78,8 +78,40 @@ async function register(req,res){
 
 }
 
-async function verifyOtp(){
+async function verifyOtp(req,res){
     console.log("Verify OTP function called");
+    const {email,otp}=req.body;
+
+    if(!email || !otp){
+        return res.status(400).json({message:"All fields are required"});
+    }
+
+    try{
+        const otpRecord = await Otp.findOne({email,otp,action:"account_verification"});
+        if(!otpRecord){
+            return res.status(400).json({message:"Invalid or expired OTP"});
+        }
+
+        // If OTP is valid, verify the user's email
+        await User.updateOne({email}, {isVerified:true});
+        await Otp.deleteMany({email,action:"account_verification"});
+      
+        // return res.status(200).json({message:"Email verified successfully"});
+         const token=jwt.sign({id:user._id,name:user.name,role:user.role},process.env.JWT_SECRET,{expiresIn:"7d"});
+         const user=   await User.findOne({email});
+         return res.status(200).json({ 
+        "message":"Email verified successfully",
+        _id: user._id,
+        email: user.email,
+        role: user.role,
+        name: user.name,
+        token
+       });
+    }catch(err){
+        console.error("Error occurred during OTP verification:", err);
+        return res.status(500).json({error:err.message});
+    }
+
 }
 
 module.exports={
