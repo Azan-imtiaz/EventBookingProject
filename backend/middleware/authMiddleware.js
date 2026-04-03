@@ -1,4 +1,5 @@
 const jwt=require("jsonwebtoken");
+const User=require("../models/userModel");
 
 
 async function protect(req,res,next){
@@ -28,6 +29,6 @@ else{
 }
 }
 
-exports.module={
+module.exports={
     protect,admin
 }
