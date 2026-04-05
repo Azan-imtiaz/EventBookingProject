@@ -21,7 +21,7 @@ app.get("/",(req,res)=>{
 app.use("/api/auth",authRoute);
 
 app.use("/api/event",eventRoute);
-// app.use("/api/booking",bookingRoute);
+app.use("/api/bookings",bookingRoute);
 
 console.log("Auth route loaded");
 app.listen(PORT,()=>{

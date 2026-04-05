@@ -7,7 +7,7 @@ router.get("/",getAllEvents);
 
 router.get("/:id",getEventById);
 
-router.post("/",protect,admin,createEvent);
+router.post("/createEvent",protect,admin,createEvent);
 router.delete("/:id",protect,admin,deleteEvent);
 router.put("/:id",protect,admin,updateEvent);
 

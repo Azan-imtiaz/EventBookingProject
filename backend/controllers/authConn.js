@@ -97,8 +97,8 @@ async function verifyOtp(req,res){
         await Otp.deleteMany({email,action:"account_verification"});
       
         // return res.status(200).json({message:"Email verified successfully"});
+        const user=   await User.findOne({email});
          const token=jwt.sign({id:user._id,name:user.name,role:user.role},process.env.JWT_SECRET,{expiresIn:"7d"});
-         const user=   await User.findOne({email});
          return res.status(200).json({ 
         "message":"Email verified successfully",
         _id: user._id,
