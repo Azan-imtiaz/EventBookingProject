@@ -70,3 +70,4 @@ const verifyOtp = async (otp) => {
     );
 };
 
+export default AuthContext;
