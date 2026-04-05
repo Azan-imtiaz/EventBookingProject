@@ -79,3 +79,35 @@ exports.sendOtpEmail = async (email, otp, type, eventName) => {
         console.error("Error sending OTP email:", error);
     }
 };
+
+exports.sendBookingConfirmationEmail = async (email, eventName) => {
+
+const mailOptions={
+    from:process.env.EMAIL_USER,
+    to:email,
+    subject:"Booking Confirmation",
+    html:`
+    <div style="font-family: Arial, sans-serif; background-color:#f4f4f4; padding:20px;">
+        <div style="max-width:500px; margin:auto; background:white; padding:30px; border-radius:10px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+            <h2 style="color:#333;">🎟️ Booking Confirmation</h2>
+            <p style="color:#555; font-size:16px;">
+                Thank you for booking your ticket for:
+            </p>
+            <h3 style="color:#2c3e50; margin-bottom:15px;">${eventName}</h3>
+            <p style="color:#888; font-size:14px;">
+                We look forward to seeing you there!
+            </p>
+        </div>
+    </div>
+    `
+};
+
+try {
+    await transporter.sendMail(mailOptions);
+    console.log("Booking confirmation email sent successfully");
+} catch (error) {
+    console.error("Error sending booking confirmation email:", error);
+}
+};
+
+

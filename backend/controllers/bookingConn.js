@@ -1,7 +1,7 @@
 const Booking = require('../models/bookingModel');
 const Event = require('../models/eventModel');
 const OTP = require('../models/otpModel');
-const { sendOtpEmail } = require('../utils/email');
+const { sendOtpEmail,sendBookingConfirmationEmail } = require('../utils/email');
 
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -75,7 +75,7 @@ exports.confirmBooking = async (req, res) => {
         await event.save();
 
         // Send email on admin confirmation
-        await sendOtpEmail(booking.userId.email,"22","booking", booking.eventId.title);
+        await sendBookingConfirmationEmail(booking.userId.email, booking.eventId.title);
 
         res.json({ message: 'Booking confirmed successfully', booking });
     } catch (error) {
