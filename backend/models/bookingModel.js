@@ -9,4 +9,4 @@ const bookingSchema = new mongoose.Schema({
     bookedAt: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Booking', bookingSchema);
+module.exports = mongoose.model('BookingModel', bookingSchema);
